@@ -54,7 +54,7 @@
                             </div>
                             <div class="x_content">
                                 <br />
-                                <form class="form-horizontal form-label-left" th:action="@{/admin/productline/}+${action}" th:object="${productLine}" method="post">
+                                <form class="form-horizontal form-label-left" th:action="@{/admin/productline/}+${action}" th:object="${productLine}" method="post" enctype="multipart/form-data">
                                     <input type="hidden" th:field="*{id}">
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Name</label>
@@ -65,7 +65,7 @@
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">Description</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <textarea class="form-control" placeholder="Product Line Description" th:field="*{textDescription}" rows="3"></textarea>
+                                            <textarea class="form-control" required placeholder="Product Line Description" th:field="*{textDescription}" rows="3"></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group row ">
@@ -74,6 +74,23 @@
                                             <textarea type="text" class="form-control" placeholder="Product Line HTMLDescription" th:field="*{htmlDescription}"></textarea>
                                         </div>
                                     </div>
+                                    <th:block th:if="${action=='edit'}">
+                                        <div class="form-group row ">
+                                            <label class="control-label col-md-3 col-sm-3 ">Current Image</label>
+                                            <div class="col-md-9 col-sm-9 ">
+                                                <input type="hidden" th:field = "*{image}"  class="form-control">
+                                                <img th:src="@{/upload/__*{image}__}" class="image" height="120">
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                    <div class="form-group row ">
+                                        <label class="control-label col-md-3 col-sm-3 ">Image</label>
+                                        <div class="col-md-9 col-sm-9 ">
+                                            <input type="file" th:field = "*{fileImage}"  class="fileDatas form-control">
+
+                                        </div>
+                                    </div>
+
                                     <div class="ln_solid"></div>
                                     <div class="form-group">
                                         <div class="col-md-9 col-sm-9  offset-md-3">
@@ -107,7 +124,11 @@
         tabsize: 2,
         height: 100
     });
-
+    function setImage() {
+        var s = $('.fileDatas').val();
+        var i = s.split('\\').pop().split('/').pop();
+        $('#imageShow').val(i);
+    }
 </script>
 </body>
 </html>

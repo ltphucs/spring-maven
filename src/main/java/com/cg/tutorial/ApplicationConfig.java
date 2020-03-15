@@ -19,6 +19,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -73,6 +74,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public ViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver= new ThymeleafViewResolver();
         viewResolver.setCharacterEncoding("UTF-8");
+        viewResolver.setContentType("text/html; charset=utf-8");
         viewResolver.setTemplateEngine(templateEngine());
         return  viewResolver;
     }
@@ -86,11 +88,21 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     }
 
+    @Bean(name = "multipartResolver")
+    public CommonsMultipartResolver multipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(20971520);
+        return multipartResolver;
+    }
+
     //JPA Configuration
     Properties additionalProperties(){
         Properties properties = new Properties();
         //properties.setProperty("hibernate.hbm2ddl.auto", "create-drop");
         properties.setProperty("hibernate.hbm2ddl.auto", "update");
+        properties.setProperty("hibernate.connection.useUnicode","true");
+        properties.setProperty("hibernate.connection.characterEncoding","UTF-8");
+        properties.setProperty("hibernate.connection.charSet","UTF-8");
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
         return properties;
     }
@@ -106,7 +118,7 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/cgtutorial");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/cgtutorial?useUnicode=true&characterEncoding=UTF-8");
         dataSource.setUsername( "root" );
         dataSource.setPassword( "1qaz0plm" );
         return dataSource;
@@ -123,4 +135,6 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
         em.setJpaProperties(additionalProperties());
         return em;
     }
+
+
 }

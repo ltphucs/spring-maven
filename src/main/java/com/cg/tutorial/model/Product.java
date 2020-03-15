@@ -35,17 +35,6 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productCode, String productName, String productScale, String productVendor, String productDescription, int quantityInStock, double buyPrice, double MSRP) {
-        this.productCode = productCode;
-        this.productName = productName;
-        this.productScale = productScale;
-        this.productVendor = productVendor;
-        this.productDescription = productDescription;
-        this.quantityInStock = quantityInStock;
-        this.buyPrice = buyPrice;
-        this.MSRP = MSRP;
-    }
-
     public ProductLine getProductLine() {
         return productLine;
     }

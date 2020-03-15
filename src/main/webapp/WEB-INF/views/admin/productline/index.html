@@ -48,7 +48,11 @@
                                     <th th:text="${iter.index+1}"></th>
                                     <td th:text="${productLine.name}"></td>
                                     <td th:text="${productLine.textDescription}"></td>
-                                    <td th:text="${productLine.image}"></td>
+                                    <td>
+                                        <th:block th:if="${productLine.image}">
+                                            <img th:src="@{/upload/__${productLine.image}__}" height="120px">
+                                        </th:block>
+                                    </td>
                                     <td><a th:href="@{/admin/productline/edit/__${productLine.id}__ }">Edit</a></td>
                                     <td><a th:href="@{/admin/productline/delete/__${productLine.id}__ }">Delete</a></td>
                                 </tr>
@@ -56,11 +60,7 @@
                             </tbody>
                         </table>
                     </div>
-
                 </div>
-
-
-
         </div>
         <!-- /page content -->
 

@@ -38,11 +38,8 @@ public class ProductLine {
     @Transient
     private CommonsMultipartFile[] fileImage;
 
-
     public ProductLine() {
     }
-
-
 
     @OneToMany(mappedBy = "productLine")
     private  Set<Product> products;
