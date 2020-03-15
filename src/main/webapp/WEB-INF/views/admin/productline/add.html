@@ -71,7 +71,7 @@
                                     <div class="form-group row ">
                                         <label class="control-label col-md-3 col-sm-3 ">HTMLDescription</label>
                                         <div class="col-md-9 col-sm-9 ">
-                                            <input type="text" class="form-control" placeholder="Product Line HTMLDescription" th:field="*{htmlDescription}">
+                                            <textarea type="text" class="form-control" placeholder="Product Line HTMLDescription" th:field="*{htmlDescription}"></textarea>
                                         </div>
                                     </div>
                                     <div class="ln_solid"></div>
@@ -100,5 +100,14 @@
 </div>
 <th:block th:replace="admin/layout::block-script" >
 </th:block>
+<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.16/dist/summernote-bs4.min.js"></script>
+<script>
+    $('#htmlDescription').summernote({
+        placeholder: 'Hello Bootstrap 4',
+        tabsize: 2,
+        height: 100
+    });
+
+</script>
 </body>
 </html>

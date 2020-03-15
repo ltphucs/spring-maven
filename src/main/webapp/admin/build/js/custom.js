@@ -1113,6 +1113,7 @@ function init_wysiwyg() {
 
     window.prettyPrint;
     prettyPrint();
+    console.log('done init_wysiwyg');
 
 };
 
