@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "products")
-@Where(clause = "deleted=1")
+@Where(clause = "deleted=0")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +33,10 @@ public class Product {
 
 
     public Product() {
+    }
+
+    public Product(ProductLine productLine) {
+        this.productLine=productLine;
     }
 
     public ProductLine getProductLine() {
