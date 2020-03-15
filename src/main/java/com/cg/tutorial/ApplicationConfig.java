@@ -2,7 +2,9 @@ package com.cg.tutorial;
 
 import com.cg.tutorial.service.IService;
 import com.cg.tutorial.service.ProductLineService;
+import com.cg.tutorial.service.ProductService;
 import com.cg.tutorial.service.impl.ProductLineServiceImpl;
+import com.cg.tutorial.service.impl.ProductServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -50,6 +52,9 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     @Bean
     public ProductLineService productLineService(){return  new ProductLineServiceImpl();}
+
+    @Bean
+    public ProductService productService(){return  new ProductServiceImpl();}
 
     @Bean
     public SpringResourceTemplateResolver templateResolver(){
