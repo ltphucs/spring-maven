@@ -5,7 +5,10 @@ import com.cg.tutorial.repository.ProductRepository;
 import com.cg.tutorial.service.IService;
 import com.cg.tutorial.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public class ProductServiceImpl implements ProductService {
@@ -31,5 +34,15 @@ public class ProductServiceImpl implements ProductService {
     public void remove(long id) {
         productRepository.deleteById(id);
 
+    }
+
+    @Override
+    public Page<Product> findAll(Pageable pageable) {
+        return productRepository.findAll(pageable);
+    }
+
+    @Override
+    public Page<Product> findAllByProductNameContaining(String productName,Pageable pageable) {
+        return productRepository.findAllByProductNameContaining(productName,pageable);
     }
 }

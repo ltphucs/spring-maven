@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/layout::header">
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col" th:replace="admin/layout::app-navbar" >
+
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav" th:replace="admin/layout::app-header" >
+
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+            <div class="page-title">
+                <div class="title_left">
+                    <h3 th:text="${term}"></h3><a th:href="@{/admin/product/add}" class="glyphicon glyphicon-plus"></a>
+                </div>
+                <div class="title_right">
+
+                    <div class="col-md-5 col-sm-5  form-group pull-right top_search">
+                        <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="s" id="s" placeholder="Search for...">
+                            <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Go!</button>
+                            </span>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Code</th>
+                            <th>Namew</th>
+                            <th>Scale</th>
+                            <th>Vendor</th>
+                            <th>QIS</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <th:block th:each="product,iter : ${products}">
+                            <tr>
+                                <th th:text="${iter.index+1}"></th>
+                                <td th:text="${product.productCode}"></td>
+                                <td th:text="${product.productName}"></td>
+                                <td th:text="${product.productScale}"></td>
+                                <td th:text="${product.productVendor}"></td>
+                                <td th:text="${product.quantityInStock}"></td>
+                                <td><a th:href="@{/admin/product/edit/__${product.id}__ }">Edit</a></td>
+                                <td><a th:href="@{/admin/product/delete/__${product.id}__ }">Delete</a></td>
+                            </tr>
+                        </th:block>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12">
+                    <div>
+                        <a th:href="@{'/customers'(page=${products.number - 1})}" th:if="${products.hasPrevious()}">Previous</a>
+                        <span th:text="${products.number + 1}"></span>/<span th:text="${products.totalPages}"></span>
+                        <a th:href="@{'/customers'(page=${products.number + 1})}" th:if="${products.hasNext()}">Next</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+        <!-- footer content -->
+        <footer th:replace="admin/layout::app-footer" >
+
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+<th:block th:replace="admin/layout::block-script" >
+</th:block>
+
+</body>
+</html>

@@ -1,6 +1,8 @@
 package com.cg.tutorial.repository;
 
 import com.cg.tutorial.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -11,4 +13,8 @@ public interface ProductRepository extends PagingAndSortingRepository<Product,Lo
     @Modifying
     @Query("update Product p set p.deleted=1 where p.id=:id")
     void deleteById(@Param("id") Long id);
+
+    Page<Product> findAll(Pageable pageable);
+    Page<Product> findAllByProductNameContaining(String productName,Pageable pageable);
+
 }

@@ -5,6 +5,7 @@ import com.cg.tutorial.model.ProductLine;
 import com.cg.tutorial.service.ProductLineService;
 import com.cg.tutorial.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -30,6 +32,37 @@ public class ProductController extends AdminBaseController{
 
         Iterable<Product> products = productService.findAll();
         ModelAndView modelAndView = new ModelAndView("/admin/product/index");
+        modelAndView.addObject("products",products);
+
+        modelAndView.addObject("title",TITLE_ADD);
+        modelAndView.addObject("term",TERM);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/product-paging/")
+    public ModelAndView indexPaging(@RequestParam("s")Optional<String> s, Pageable pageable){
+
+        Iterable<Product> products ;
+        if (s.isPresent())
+            products = productService.findAllByProductNameContaining(s.get(),pageable);
+        else
+            products = productService.findAll(pageable);
+        //
+        ModelAndView modelAndView = new ModelAndView("/admin/product/indexPaging");
+        modelAndView.addObject("products",products);
+
+        modelAndView.addObject("title",TITLE_ADD);
+        modelAndView.addObject("term",TERM);
+
+        return modelAndView;
+    }
+
+    @GetMapping("/product-datatables/")
+    public ModelAndView indexDataTables(){
+
+        Iterable<Product> products = productService.findAll();
+        ModelAndView modelAndView = new ModelAndView("/admin/product/indexDatatables");
         modelAndView.addObject("products",products);
 
         modelAndView.addObject("title",TITLE_ADD);
@@ -59,18 +92,18 @@ public class ProductController extends AdminBaseController{
         Iterable<ProductLine> productLines = productLineService.findAll();
         //
         productService.save(product);
-
+        //
         ModelAndView modelAndView = new ModelAndView("/admin/product/add");
         modelAndView.addObject("product",new Product(new ProductLine()));
         modelAndView.addObject("productLines",productLines);
         modelAndView.addObject("action",ACTION_ADD);
         modelAndView.addObject("term",TERM);
         modelAndView.addObject("title",TITLE_ADD);
-
+        //
         modelAndView.addObject("alert",ALERT_SUCCESS);
-
+        //
         modelAndView.addObject("message", ACTION_ADD_SUCCESS);
-
+        //
         return  modelAndView;
     }
 
@@ -79,7 +112,7 @@ public class ProductController extends AdminBaseController{
         Product product = productService.findById(id);
         if (product!=null){
             Iterable<ProductLine> productLines = productLineService.findAll();
-
+            //
             ModelAndView modelAndView = new ModelAndView("/admin/product/add");
             modelAndView.addObject("product",product);
             modelAndView.addObject("productLines",productLines);
@@ -100,17 +133,17 @@ public class ProductController extends AdminBaseController{
         Iterable<ProductLine> productLines = productLineService.findAll();
         //
         productService.save(product);
-
+        //
         ModelAndView modelAndView = new ModelAndView("/admin/product/add");
         modelAndView.addObject("product",product);
         modelAndView.addObject("productLines",productLines);
         modelAndView.addObject("action",ACTION_EDIT);
         modelAndView.addObject("term",TERM);
         modelAndView.addObject("title",TITLE_EDIT);
-
+        //
         modelAndView.addObject("alert",ALERT_SUCCESS);
         modelAndView.addObject("message", ACTION_EDIT_SUCCESS);
-
+        //
         return  modelAndView;
     }
 }
