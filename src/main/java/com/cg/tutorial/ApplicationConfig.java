@@ -5,6 +5,7 @@ import com.cg.tutorial.service.ProductLineService;
 import com.cg.tutorial.service.ProductService;
 import com.cg.tutorial.service.impl.ProductLineServiceImpl;
 import com.cg.tutorial.service.impl.ProductServiceImpl;
+import com.cg.tutorial.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -19,6 +20,7 @@ import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
@@ -54,6 +56,10 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
     public ProductLineService productLineService(){return  new ProductLineServiceImpl();}
 
     @Bean
+    public UserDetailsService userDetailsService(){return new UserDetailsServiceImpl();
+    }
+
+    @Bean
     public ProductService productService(){return  new ProductServiceImpl();}
 
     @Bean
@@ -86,8 +92,8 @@ public class ApplicationConfig extends WebMvcConfigurerAdapter implements Applic
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/admin/**")
-                .addResourceLocations("/admin/").resourceChain(false);
+        registry.addResourceHandler("/assets-admin/**")
+                .addResourceLocations("/assets-admin/").resourceChain(false);
         registry.addResourceHandler("/upload/**")
                 .addResourceLocations("/upload/").resourceChain(false);
 
