@@ -2,6 +2,7 @@ package com.cg.tutorial.service.impl;
 
 import com.cg.tutorial.model.Product;
 import com.cg.tutorial.repository.ProductRepository;
+import com.cg.tutorial.repository.rest.RestProductRepository;
 import com.cg.tutorial.service.IService;
 import com.cg.tutorial.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,5 +45,13 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Page<Product> findAllByProductNameContaining(String productName,Pageable pageable) {
         return productRepository.findAllByProductNameContaining(productName,pageable);
+    }
+
+
+    //REST SERVICES
+    @Autowired
+    private RestProductRepository restProductRepository;
+    public List<Product> findAllRest(){
+      return  restProductRepository.findAll();
     }
 }

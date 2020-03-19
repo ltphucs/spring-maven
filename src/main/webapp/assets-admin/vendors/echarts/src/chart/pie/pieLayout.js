@@ -91,7 +91,7 @@ define(function (require) {
             }, true);
 
             // Some sector is constrained by minAngle
-            // Rest sectors needs recalculate angle
+            // rest sectors needs recalculate angle
             if (restAngle < PI2) {
                 // Average the angle if rest angle is not enough after all angles is
                 // Constrained by minAngle

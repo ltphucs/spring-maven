@@ -1,5 +1,6 @@
 package com.cg.tutorial.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Where;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -11,7 +12,7 @@ import java.util.Set;
 @Where(clause = "deleted=0")
 public class ProductLine {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     public String getName() {
@@ -36,11 +37,13 @@ public class ProductLine {
     }
 
     @Transient
+    @JsonIgnore
     private CommonsMultipartFile[] fileImage;
 
     public ProductLine() {
     }
 
+    @JsonIgnore
     @OneToMany(mappedBy = "productLine")
     private  Set<Product> products;
 

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="admin/layout::header-css"></th:block>
+    <th:block th:replace="admin/layout::datatables-css"></th:block>
+</head>
+<body class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col" th:replace="admin/layout::app-navbar" >
+
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav" th:replace="admin/layout::app-header" >
+
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+
+            <div class="page-title">
+                <div class="title_left">
+                    <h3 th:text="${term}"></h3>
+                </div>
+                <div class="title_right">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="float-right"> <a th:href="@{/admin/product/add}" class="btn btn-primary" th:text="${title}"></a></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clearfix"></div>
+            <div class="row">
+                <div class="col-12">
+                    <table id="products-datatables" name="products-datatables" class="table table-striped table-bordered" style="width:100%">
+
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer th:replace="admin/layout::app-footer" >
+
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+<th:block th:replace="admin/layout::block-script" >
+</th:block>
+<th:block th:replace="admin/layout::datatables-script" >
+</th:block>
+<script>
+    var products = {} || products;
+    products.intTable = function(){
+        $("#products-datatables").DataTable({
+            ajax: {
+                url: 'http://localhost:8080/api/products/',
+                method: "GET",
+                datatype: "json",
+                dataSrc: ""
+            },
+            columns: [
+                { data: "productName" },
+                { data: "productCode" },
+                { data: "productName" },
+                { data: "productCode" },
+            ]
+        });
+    };
+
+    products.init = function(){
+        products.intTable();
+
+    };
+
+    $(document).ready(function(){
+        products.init();
+    });
+
+</script>
+</body>
+</html>
