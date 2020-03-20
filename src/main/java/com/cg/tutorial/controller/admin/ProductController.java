@@ -72,6 +72,17 @@ public class ProductController extends AdminBaseController{
     }
 
 
+    @GetMapping("/product-datatables-ajax/")
+    public ModelAndView indexDataTablesAjax(){
+
+        ModelAndView modelAndView = new ModelAndView("/admin/product/index-datatables-ajax");
+        modelAndView.addObject("title",TITLE_ADD);
+        modelAndView.addObject("term",TERM);
+
+        return modelAndView;
+    }
+
+
     @GetMapping(value = "/product/add",produces = "application/json;charset=UTF-8")
     public ModelAndView showAddForm(){
         Iterable<ProductLine> productLines = productLineService.findAll();

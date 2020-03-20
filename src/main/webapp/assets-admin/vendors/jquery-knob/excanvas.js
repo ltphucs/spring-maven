@@ -72,7 +72,7 @@ if (!document.createElement('canvas').getContext) {
    * @param {Function} f The function to bind the object to
    * @param {Object} obj The object that should act as this when the function
    *     is called
-   * @param {*} var_args Rest arguments that will be used as the initial
+   * @param {*} var_args rest arguments that will be used as the initial
    *     arguments when the function is called
    * @return {Function} A new function that has bound this
    */
