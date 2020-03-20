@@ -41,19 +41,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     protected void configure(HttpSecurity http) throws Exception {
 
-        http//.authorizeRequests()//.antMatchers("/admin/*").hasRole("ADMIN")
-                //.and()
+        http.authorizeRequests()//.antMatchers("/admin/*").hasRole("ADMIN")
+                .and()
                 .authorizeRequests().antMatchers("/user/*").hasAnyRole("ADMIN", "USER")
                 .and()
                 .authorizeRequests().antMatchers("/","/home","/assets-admin/**","/upload/**").permitAll()
                 .and()
                 .authorizeRequests().antMatchers("/api/**").permitAll()
                 //using for code
-                .and()
-                .authorizeRequests().antMatchers("/admin/**").permitAll()
+                //.and()
+                //.authorizeRequests().antMatchers("/admin/**").permitAll()
                 .and()
                 .authorizeRequests().anyRequest().authenticated()
-                //.antMatchers("/","/index","/home","/assets-admin/*","/upload/*").permitAll()
                 .and().formLogin()
                 .loginPage("/user/login")
                 .usernameParameter("username").passwordParameter("password")

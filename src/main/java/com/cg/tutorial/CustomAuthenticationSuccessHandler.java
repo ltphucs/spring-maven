@@ -16,9 +16,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
-        //do some logic here if you want something to be done whenever
-        //the user successfully logs in.
-
         HttpSession session = httpServletRequest.getSession();
         //User authUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User loggedInUser = ((UserDetailsCustom) authentication.getPrincipal()).getUserDetails();
@@ -28,7 +25,6 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
         httpServletResponse.setStatus(HttpServletResponse.SC_OK);
 
         //since we have created our custom success handler, its up to us to where
-        //we will redirect the user after successfully login
         httpServletResponse.sendRedirect("/admin/dashboard");
     }
 }

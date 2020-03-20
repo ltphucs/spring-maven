@@ -75,7 +75,6 @@ public class ProductLineController extends AdminBaseController {
 
         File uploadRootDir = new File(uploadRootPath);
         //
-        // Tạo thư mục gốc upload nếu nó không tồn tại.
         if (!uploadRootDir.exists()) {
             uploadRootDir.mkdirs();
         }
@@ -83,17 +82,13 @@ public class ProductLineController extends AdminBaseController {
         //
         Map<File, String> uploadedFiles = new HashMap();
         for (CommonsMultipartFile fileData : fileDatas) {
-
-            // Tên file gốc tại Client.
             String name = fileData.getOriginalFilename();
             System.out.println("Client File Name = " + name);
 
             if (name != null && name.length() > 0) {
                 try {
-                    // Tạo file tại Server.
                     File serverFile = new File(uploadRootDir.getAbsolutePath() + File.separator + name);
 
-                    // Luồng ghi dữ liệu vào file trên Server.
                     BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
                     stream.write(fileData.getBytes());
                     stream.close();
