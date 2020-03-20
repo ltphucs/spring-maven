@@ -40,14 +40,21 @@ public class ProductRestController
     }
 
     @PostMapping(value = "/products/")
-    public ResponseEntity<Void> createProduct(@RequestBody Product product, UriComponentsBuilder ucBuilder) {
-        productService.save(product);
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(ucBuilder.path("/customers/{id}").buildAndExpand(product.getId()).toUri());
-        return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
+    public ResponseEntity<Product> createProduct(@RequestBody Product product, UriComponentsBuilder ucBuilder) {
+        try {
+
+            productService.save(product);
+
+            //HttpHeaders headers = new HttpHeaders();
+            //headers.setLocation(ucBuilder.path("/customers/{id}").buildAndExpand(product.getId()).toUri());
+            return new ResponseEntity<Product>(product, HttpStatus.OK);
+
+        }catch (Exception ex){
+            return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    @PutMapping(value = "/customers/{id}")
+    @PutMapping(value = "/products/{id}")
     public ResponseEntity<Product> updateProduct(@PathVariable("id") long id, @RequestBody Product product) {
 
         Product currentProduct = productService.findById(id);
@@ -58,10 +65,14 @@ public class ProductRestController
         }
 
         currentProduct.setProductCode(product.getProductCode());
-        currentProduct.setProductDescription(product.getProductDescription());
-        currentProduct.setProductLine(product.getProductLine());
 
-        productService.save(currentProduct);
+        currentProduct.setProductLine(product.getProductLine());
+        try {
+            productService.save(currentProduct);
+        }catch (Exception ex){
+            return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         return new ResponseEntity<Product>(currentProduct, HttpStatus.OK);
     }
 }

@@ -2,6 +2,8 @@ package com.cg.tutorial.service.impl;
 
 import com.cg.tutorial.model.ProductLine;
 import com.cg.tutorial.repository.ProductLineRepository;
+import com.cg.tutorial.repository.rest.RestProductLineRepository;
+import com.cg.tutorial.repository.rest.RestProductRepository;
 import com.cg.tutorial.service.IService;
 import com.cg.tutorial.service.ProductLineService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,10 @@ import java.util.List;
 public class ProductLineServiceImpl implements ProductLineService {
     @Autowired
     private ProductLineRepository productLineRepository;
+
+
+    @Autowired
+    private RestProductLineRepository restProductLineRepository;
 
     @Override
     public Iterable<ProductLine> findAll() {
@@ -34,4 +40,9 @@ public class ProductLineServiceImpl implements ProductLineService {
     public void remove(long id) {
         productLineRepository.deleteById(id);
     }
+
+    //REST SERVICES
+    @Override
+    public List<ProductLine> findAllRest(){ return restProductLineRepository.findAll();}
+
 }
