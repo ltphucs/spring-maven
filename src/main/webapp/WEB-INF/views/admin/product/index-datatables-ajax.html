@@ -127,9 +127,10 @@
                 dataSrc: ""
             },
             columns: [
-                { data: "productName" , name: "Name"},
-                { data: "productCode", name : "Code" },
-                { data: "id", name : "Action" ,"render": function ( data, type, row, meta ) {
+                { data: "productName" , name: "Name", title: "Name",orderable: true},
+                { data: "productCode", name : "Code" , title: "Code"},
+                { data: "id", name : "Action", title : "Action",sortable: false,
+                    orderable: false ,"render": function ( data, type, row, meta ) {
                     var str =  "<a href='javascript:;' title='edit product' onclick='products.get("+ data +")'><i class='fa fa-edit'></i></a> " +
                         "<a href='javascript:;' title='remove product' onclick='products.delete("+ data +")' ><i class='fa fa-trash'></i></a>"
                         return str ;
