@@ -42,13 +42,8 @@ public class ProductRestController
     @PostMapping(value = "/products/")
     public ResponseEntity<Product> createProduct(@RequestBody Product product, UriComponentsBuilder ucBuilder) {
         try {
-
             productService.save(product);
-
-            //HttpHeaders headers = new HttpHeaders();
-            //headers.setLocation(ucBuilder.path("/customers/{id}").buildAndExpand(product.getId()).toUri());
             return new ResponseEntity<Product>(product, HttpStatus.OK);
-
         }catch (Exception ex){
             return new ResponseEntity<Product>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

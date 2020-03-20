@@ -133,20 +133,46 @@
                     var str =  "<a href='javascript:;' title='edit product' onclick='products.get("+ data +")'><i class='fa fa-edit'></i></a> " +
                         "<a href='javascript:;' title='remove product' onclick='products.delete("+ data +")' ><i class='fa fa-trash'></i></a>"
                         return str ;
-                    }}
+                    }
+                }
             ]
         });
     };
 
     products.addNew = function(){
-        $('#formAddEdit')[0].reset();
-        //
         $('#modalTitle').html("Add new product");
+        products.resetForm();
+        $('#modalAddEdit').modal('show');
+    };
+    products.initValidation =  function(){
+        $("#modalAddEdit").validate({
+            rules: {
+                productName: "required",
+                productCode:  {
+                    required: true,
+                    minlength: 5
+                },
+                productLine: "required"
+            },
+            messages: {
+                productName: "Please enter your productName",
+                productCode: {
+                    required: "Please enter a productCode",
+                    minlength: "Your username must consist of at least 5 characters"
+                },
+                productLine: "Please enter your productLine",
+            }
+        });
+    }
+
+    products.resetForm =  function(){
+        $('#formAddEdit')[0].reset();
         $('#productName').val('');
         $('#productCode').val('');
-        $('#modalAddEdit').modal('show');
         //
-    };
+        var validator = $( "#formAddEdit" ).validate();
+        validator.resetForm();
+    }
 
     products.initProductLines = function(){
         $.ajax({
@@ -164,11 +190,7 @@
         });
     };
 
-    products.init = function(){
-        products.intTable();
-        products.initProductLines();
 
-    };
 
     products.get = function(id){
         console.log('get :'+ id);
@@ -219,7 +241,7 @@
     };
 
     products.save = function(){
-
+        if ($("#formAddEdit").valid()){
             if($('#id').val() == 0){
                 var productObj = {};
                 productObj.productName = $('#productName').val();
@@ -274,20 +296,23 @@
                     data : JSON.stringify(productObj),
                     success : function(data){
                         $('#modalAddEdit').modal('hide');
-                        products.intTable();
+                        $("#products-datatables").DataTable().ajax.reload();
                     }
                 });
             }
-
+        }
 
     };
 
+    products.init = function(){
+        products.intTable();
+        products.initProductLines();
+        products.initValidation();
+    };
 
     $(document).ready(function(){
         products.init();
     });
-
-
 
 </script>
 </body>
