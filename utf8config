@@ -1,0 +1,71 @@
+1 .Config in Init Class :   
+ApplicationInitializer
+    @Override
+    protected Filter[] getServletFilters() {
+        CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        characterEncodingFilter.setEncoding("UTF-8");
+        characterEncodingFilter.setForceEncoding(true);
+
+        HiddenHttpMethodFilter httpMethodFilter = new HiddenHttpMethodFilter();
+
+        final Filter[] filters = {characterEncodingFilter,httpMethodFilter};
+
+        return filters;
+    }
+2. Config in Application config class: 
+ApplicationConfig
+  @Bean
+  public SpringResourceTemplateResolver templateResolver(){
+        SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+        templateResolver.setApplicationContext(applicationContext);
+        templateResolver.setPrefix("/WEB-INF/views/");
+        templateResolver.setSuffix(".html");
+        //config Utf-8
+        templateResolver.setTemplateMode(TemplateMode.HTML);
+        templateResolver.setCharacterEncoding("UTF-8");
+
+        return templateResolver;
+    }
+    
+    @Bean
+    public ViewResolver viewResolver(){
+        ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
+
+        viewResolver.setCharacterEncoding("UTF-8");
+        viewResolver.setContentType("text/html;charset=utf-8");
+
+        viewResolver.setTemplateEngine(templateEngine());
+
+        return viewResolver;
+    }
+    
+    @Bean
+    public DataSource dataSource(){
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/demojpa?useUnicode=true&characterEncoding=UTF-8");
+        dataSource.setUsername("root");
+        dataSource.setPassword("root");
+        return  dataSource;
+    }
+    
+    Properties additionalProperties(){
+        Properties properties = new Properties();
+        
+        properties.setProperty("hibernate.hbm2ddl.auto","update");
+        properties.setProperty("hibernate.connection.useUnicode","true");
+        properties.setProperty("hibernate.connection.characterEncoding","UTF-8");
+        properties.setProperty("hibernate.connection.charset","UTF-8");
+        properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQL5Dialect");
+       
+        return  properties;
+    }
+3. Config in Controller
+    @GetMapping(value = "/customers", produces = "application/json;charset=UTF-8")
+    public String customers(Model model){
+        List<Customer> customers = customerService.findAll();
+        model.addAttribute("customers",customers);
+        return "index";
+    }
+
+
