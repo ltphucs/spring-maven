@@ -3,6 +3,7 @@ ApplicationInitializer
     @Override
     protected Filter[] getServletFilters() {
         CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
+        //config Utf-8
         characterEncodingFilter.setEncoding("UTF-8");
         characterEncodingFilter.setForceEncoding(true);
 
@@ -30,7 +31,7 @@ ApplicationConfig
     @Bean
     public ViewResolver viewResolver(){
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-
+        //config Utf-8
         viewResolver.setCharacterEncoding("UTF-8");
         viewResolver.setContentType("text/html;charset=utf-8");
 
@@ -43,6 +44,7 @@ ApplicationConfig
     public DataSource dataSource(){
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        //config Utf-8
         dataSource.setUrl("jdbc:mysql://localhost:3306/demojpa?useUnicode=true&characterEncoding=UTF-8");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
@@ -54,6 +56,7 @@ ApplicationConfig
         
         properties.setProperty("hibernate.hbm2ddl.auto","update");
         properties.setProperty("hibernate.connection.useUnicode","true");
+        //config Utf-8
         properties.setProperty("hibernate.connection.characterEncoding","UTF-8");
         properties.setProperty("hibernate.connection.charset","UTF-8");
         properties.setProperty("hibernate.dialect","org.hibernate.dialect.MySQL5Dialect");
